@@ -209,6 +209,27 @@ class AddressBook {
             .sort((a, b) => (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName))
             .map(contact => contact.toString());
     }
+
+    // Sort by City
+    sortByCity() {
+        return this.contacts
+            .sort((a, b) => a.city.localeCompare(b.city))
+            .map(contact => contact.toString());
+    }
+
+    // Sort by State
+    sortByState() {
+        return this.contacts
+            .sort((a, b) => a.state.localeCompare(b.state))
+            .map(contact => contact.toString());
+    }
+
+    // Sort by Zip Code
+    sortByZip() {
+        return this.contacts
+            .sort((a, b) => a.zip.localeCompare(b.zip))  // String sorting to avoid number issues
+            .map(contact => contact.toString());
+    }
 }
 
 module.exports = AddressBook;
@@ -249,14 +270,23 @@ module.exports = Validator;
 try {
     const myAddressBook = new AddressBook();
 
-    // Adding some contacts
+    // Adding contacts
     myAddressBook.addContact(new Contact("John", "Doe", "123 Main St", "New York", "NY", "10001", "9876543210", "john@example.com"));
     myAddressBook.addContact(new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"));
-    myAddressBook.addContact(new Contact("Bob", "Johnson", "789 Oak St", "New York", "NY", "10002", "2345678901", "bob@example.com"));
+    myAddressBook.addContact(new Contact("Bob", "Johnson", "789 Oak St", "San Francisco", "CA", "94101", "2345678901", "bob@example.com"));
+    myAddressBook.addContact(new Contact("Eve", "Adams", "321 Pine St", "Chicago", "IL", "60601", "3456789012", "eve@example.com"));
 
-    // ✅ Sorting contacts alphabetically
-    console.log("\nSorted Address Book Entries:");
-    console.log(myAddressBook.sortContactsByName().join("\n"));
+    // Sorting by City
+    console.log("\nSorted by City:");
+    console.log(myAddressBook.sortByCity().join("\n"));
+
+    // Sorting by State
+    console.log("\nSorted by State:");
+    console.log(myAddressBook.sortByState().join("\n"));
+
+    // Sorting by Zip Code
+    console.log("\nSorted by Zip Code:");
+    console.log(myAddressBook.sortByZip().join("\n"));
 
 } catch (error) {
     console.error("Error:", error.message);
