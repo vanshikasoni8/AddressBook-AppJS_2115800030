@@ -139,6 +139,32 @@ class AddressBook {
         console.log(`Contact with name ${name} deleted successfully.`);
     }
 
+    // Find people by City
+    findContactsByCity(city) {
+        const contactsInCity = this.contacts.filter(contact => contact.city.toLowerCase() === city.toLowerCase());
+
+        // Map to get only names
+        const names = contactsInCity.map(contact => `${contact.firstName} ${contact.lastName}`);
+
+        // Reduce to get count
+        const count = contactsInCity.reduce(count => count + 1, 0);
+
+        return { names, count };
+    }
+
+    // Find people by State
+    findContactsByState(state) {
+        const contactsInState = this.contacts.filter(contact => contact.state.toLowerCase() === state.toLowerCase());
+
+        // Map to get only names
+        const names = contactsInState.map(contact => `${contact.firstName} ${contact.lastName}`);
+
+        // Reduce to get count
+        const count = contactsInState.reduce(count => count + 1, 0);
+
+        return { names, count };
+    }
+
     // Get the count of contacts using Reduce function
     getContactCount() {
         return this.contacts.reduce((count, contact) => count + 1, 0); // Count each contact
@@ -179,30 +205,22 @@ module.exports = Validator;
 // const Contact = require("./Contact");
 // const AddressBook = require("./AddressBook");
 
+
 try {
-    // Create a new address book
     const myAddressBook = new AddressBook();
 
-    // Create a new address book
-    myAddressBook.createNewAddressBook();
+    // Adding some contacts
+    myAddressBook.addContact(new Contact("John", "Doe", "123 Main St", "New York", "NY", "10001", "9876543210", "john@example.com"));
+    myAddressBook.addContact(new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"));
+    myAddressBook.addContact(new Contact("Bob", "Johnson", "789 Oak St", "New York", "NY", "10002", "2345678901", "bob@example.com"));
 
-    // Add contacts
-    const contact1 = new Contact(
-        "John", "Doe", "1234 Street", "New York", "NY", "10001", "9876543210", "john@example.com"
-    );
-    const contact2 = new Contact(
-        "Alice", "Smith", "456 Avenue", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"
-    );
-    const contact3 = new Contact(
-        "John", "Doe", "7890 Boulevard", "Chicago", "IL", "60601", "2345678901", "john.d@example.com"
-    );
+    // Search by City
+    const citySearch = myAddressBook.findContactsByCity("New York");
+    console.log(`Contacts in New York: ${citySearch.names.join(", ")} (Total: ${citySearch.count})`);
 
-    // Add first contact
-    myAddressBook.addContact(contact1);
-    myAddressBook.addContact(contact2);
-
-    // Attempt to add a duplicate contact
-    myAddressBook.addContact(contact3); // This should throw an error
+    // Search by State
+    const stateSearch = myAddressBook.findContactsByState("CA");
+    console.log(`Contacts in California: ${stateSearch.names.join(", ")} (Total: ${stateSearch.count})`);
 
 } catch (error) {
     console.error("Error:", error.message);
