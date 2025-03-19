@@ -40,17 +40,38 @@ class Contact {
 
 module.exports = Contact;
 
+//AddressBook
+const Contact = require('./Contact'); // Assuming Contact class is in Contact.js
 
-// AdressBook.js
 class AddressBook {
     constructor() {
-        this.contacts = []; // Store contacts in an array
+        this.contacts = []; // Initializes an empty contacts array
     }
 
-    
+    // Create a new Address Book (reset the contacts array)
+    createNewAddressBook() {
+        this.contacts = []; // Clear the existing contacts
+        console.log("New Address Book created successfully.");
+    }
+
+    // Add a new contact
+    addContact(contact) {
+        if (!(contact instanceof Contact)) {
+            throw new Error("Invalid contact object.");
+        }
+        this.contacts.push(contact);
+        console.log("Contact added successfully.");
+    }
+
+    // List all contacts
+    listContacts() {
+        return this.contacts;
+    }
 }
 
+module.exports = AddressBook;
 
+//Validations
 class Validator {
     static isValidName(name) {
         return /^[A-Z][a-zA-Z]{2,}$/.test(name); // Starts with capital, min 3 chars
