@@ -45,6 +45,11 @@ class Contact {
         this.zip = zip;
         this.phoneNumber = phoneNumber;
         this.email = email;
+
+    }
+
+    toString() {
+        return `${this.firstName} ${this.lastName} - ${this.address}, ${this.city}, ${this.state}, ${this.zip} - ${this.phone} - ${this.email}`;
     }
 }
 
@@ -197,6 +202,13 @@ class AddressBook {
     getContactCount() {
         return this.contacts.reduce((count, contact) => count + 1, 0); // Count each contact
     }
+
+    // Sort contacts alphabetically by full name
+    sortContactsByName() {
+        return this.contacts
+            .sort((a, b) => (a.firstName + a.lastName).localeCompare(b.firstName + b.lastName))
+            .map(contact => contact.toString());
+    }
 }
 
 module.exports = AddressBook;
@@ -242,13 +254,10 @@ try {
     myAddressBook.addContact(new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"));
     myAddressBook.addContact(new Contact("Bob", "Johnson", "789 Oak St", "New York", "NY", "10002", "2345678901", "bob@example.com"));
 
-    // Count by City
-    console.log(`Number of contacts in New York: ${myAddressBook.countContactsByCity("New York")}`);
-
-    // Count by State
-    console.log(`Number of contacts in California: ${myAddressBook.countContactsByState("CA")}`);
+    // ✅ Sorting contacts alphabetically
+    console.log("\nSorted Address Book Entries:");
+    console.log(myAddressBook.sortContactsByName().join("\n"));
 
 } catch (error) {
     console.error("Error:", error.message);
-
 }
