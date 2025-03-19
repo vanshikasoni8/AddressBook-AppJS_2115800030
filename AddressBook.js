@@ -95,3 +95,27 @@ class Validator {
 }
 
 module.exports = Validator;
+
+
+const Contact = require("./Contact");
+const AddressBook = require("./AddressBook");
+
+try {
+    // Create a new address book
+    const myAddressBook = new AddressBook();
+
+    // Create a new address book (clear existing ones)
+    myAddressBook.createNewAddressBook();
+
+    // Add new contacts
+    const contact1 = new Contact("John", "Doe", "1234 Street", "New York", "NY", "10001", "9876543210", "john@example.com");
+    const contact2 = new Contact("Alice", "Smith", "456 Avenue", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com");
+
+    myAddressBook.addContact(contact1);
+    myAddressBook.addContact(contact2);
+
+    // List all contacts
+    console.log("All Contacts in Address Book:", myAddressBook.listContacts());
+} catch (error) {
+    console.error("Error:", error.message);
+}
