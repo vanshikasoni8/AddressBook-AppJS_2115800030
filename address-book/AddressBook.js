@@ -118,6 +118,11 @@ class AddressBook {
         this.contacts.splice(index, 1); // Remove the contact at the found index
         console.log(`Contact with name ${name} deleted successfully.`);
     }
+
+    // Get the count of contacts using Reduce function
+    getContactCount() {
+        return this.contacts.reduce((count, contact) => count + 1, 0); // Count each contact
+    }
 }
 
 module.exports = AddressBook;
@@ -154,7 +159,6 @@ module.exports = Validator;
 // const Contact = require("./Contact");
 // const AddressBook = require("./AddressBook");
 
-
 try {
     // Create a new address book
     const myAddressBook = new AddressBook();
@@ -169,19 +173,15 @@ try {
     const contact2 = new Contact(
         "Alice", "Smith", "456 Avenue", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"
     );
+    const contact3 = new Contact(
+        "Bob", "Johnson", "7890 Boulevard", "Chicago", "IL", "60601", "2345678901", "bob@example.com"
+    );
     myAddressBook.addContact(contact1);
     myAddressBook.addContact(contact2);
+    myAddressBook.addContact(contact3);
 
-    // List all contacts before deleting
-    console.log("Contacts before deletion:");
-    console.log(myAddressBook.listContacts());
-
-    // Delete the contact by first name
-    myAddressBook.deleteContactByName("John");
-
-    // List all contacts after deleting
-    console.log("Contacts after deletion:");
-    console.log(myAddressBook.listContacts());
+    // Get the count of contacts
+    console.log("Number of contacts in the address book:", myAddressBook.getContactCount()); // Should return 3
 
 } catch (error) {
     console.error("Error:", error.message);
