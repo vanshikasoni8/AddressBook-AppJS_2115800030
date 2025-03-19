@@ -74,6 +74,26 @@ class AddressBook {
         console.log("Contact added successfully.");
     }
 
+     // Add a new contact after checking for duplicates
+     addContact(contact) {
+        if (!(contact instanceof Contact)) {
+            throw new Error("Invalid contact object.");
+        }
+
+        // Check for duplicate using filter()
+        const duplicateContacts = this.contacts.filter(
+            (c) => c.firstName.toLowerCase() === contact.firstName.toLowerCase() &&
+                   c.lastName.toLowerCase() === contact.lastName.toLowerCase()
+        );
+
+        if (duplicateContacts.length > 0) {
+            throw new Error(`Duplicate contact found: ${contact.firstName} ${contact.lastName}`);
+        }
+
+        this.contacts.push(contact);
+        console.log("Contact added successfully.");
+    }
+
     // List all contacts
     listContacts() {
         return this.contacts;
@@ -174,14 +194,15 @@ try {
         "Alice", "Smith", "456 Avenue", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"
     );
     const contact3 = new Contact(
-        "Bob", "Johnson", "7890 Boulevard", "Chicago", "IL", "60601", "2345678901", "bob@example.com"
+        "John", "Doe", "7890 Boulevard", "Chicago", "IL", "60601", "2345678901", "john.d@example.com"
     );
+
+    // Add first contact
     myAddressBook.addContact(contact1);
     myAddressBook.addContact(contact2);
-    myAddressBook.addContact(contact3);
 
-    // Get the count of contacts
-    console.log("Number of contacts in the address book:", myAddressBook.getContactCount()); // Should return 3
+    // Attempt to add a duplicate contact
+    myAddressBook.addContact(contact3); // This should throw an error
 
 } catch (error) {
     console.error("Error:", error.message);
