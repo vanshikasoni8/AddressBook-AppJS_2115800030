@@ -179,6 +179,20 @@ class AddressBook {
             .map(contact => `${contact.firstName} ${contact.lastName} - ${contact.phone} - ${contact.email}`);
     }
 
+    // Count people by City
+    countContactsByCity(city) {
+        return this.contacts
+            .filter(contact => contact.city.toLowerCase() === city.toLowerCase())
+            .reduce(count => count + 1, 0);
+    }
+
+    // Count people by State
+    countContactsByState(state) {
+        return this.contacts
+            .filter(contact => contact.state.toLowerCase() === state.toLowerCase())
+            .reduce(count => count + 1, 0);
+    }
+
     // Get the count of contacts using Reduce function
     getContactCount() {
         return this.contacts.reduce((count, contact) => count + 1, 0); // Count each contact
@@ -228,14 +242,13 @@ try {
     myAddressBook.addContact(new Contact("Alice", "Smith", "456 Elm St", "Los Angeles", "CA", "90001", "1234567890", "alice@example.com"));
     myAddressBook.addContact(new Contact("Bob", "Johnson", "789 Oak St", "New York", "NY", "10002", "2345678901", "bob@example.com"));
 
-    // 🔍 View by City
-    console.log("Contacts in New York:");
-    console.log(myAddressBook.viewContactsByCity("New York").join("\n"));
+    // Count by City
+    console.log(`Number of contacts in New York: ${myAddressBook.countContactsByCity("New York")}`);
 
-    // 🔍 View by State
-    console.log("Contacts in California:");
-    console.log(myAddressBook.viewContactsByState("CA").join("\n"));
+    // Count by State
+    console.log(`Number of contacts in California: ${myAddressBook.countContactsByState("CA")}`);
 
 } catch (error) {
     console.error("Error:", error.message);
+
 }
