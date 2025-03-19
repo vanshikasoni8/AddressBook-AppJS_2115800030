@@ -53,6 +53,7 @@ module.exports = Contact;
 //AddressBook
 // const Contact = require("./Contact"); // Import the Contact class
 
+
 class AddressBook {
     constructor() {
         this.contacts = []; // Initialize an empty contacts array
@@ -105,10 +106,22 @@ class AddressBook {
             console.log("Contact updated successfully.");
         }
     }
+
+    // Delete a contact by name (first or last name)
+    deleteContactByName(name) {
+        const index = this.contacts.findIndex(
+            (contact) => contact.firstName.toLowerCase() === name.toLowerCase() || contact.lastName.toLowerCase() === name.toLowerCase()
+        );
+        if (index === -1) {
+            throw new Error(`No contact found with name: ${name}`);
+        }
+        this.contacts.splice(index, 1); // Remove the contact at the found index
+        console.log(`Contact with name ${name} deleted successfully.`);
+    }
 }
 
-
 module.exports = AddressBook;
+
 
 //Validations
 class Validator {
@@ -136,8 +149,11 @@ class Validator {
 module.exports = Validator;
 
 
+
+//For testing
 // const Contact = require("./Contact");
 // const AddressBook = require("./AddressBook");
+
 
 try {
     // Create a new address book
@@ -156,25 +172,15 @@ try {
     myAddressBook.addContact(contact1);
     myAddressBook.addContact(contact2);
 
-    // List all contacts before editing
-    console.log("Contacts before editing:");
+    // List all contacts before deleting
+    console.log("Contacts before deletion:");
     console.log(myAddressBook.listContacts());
 
-    // Find and edit the contact by first name
-    const newContactDetails = {
-        firstName: "Johnathan",
-        lastName: "Doe",
-        address: "7890 New Street",
-        city: "San Francisco",
-        state: "CA",
-        zip: "94107",
-        phoneNumber: "9876543211",
-        email: "johnathan@example.com",
-    };
-    myAddressBook.editContact("John", newContactDetails); // Find by first name and edit
+    // Delete the contact by first name
+    myAddressBook.deleteContactByName("John");
 
-    // List all contacts after editing
-    console.log("Contacts after editing:");
+    // List all contacts after deleting
+    console.log("Contacts after deletion:");
     console.log(myAddressBook.listContacts());
 
 } catch (error) {
